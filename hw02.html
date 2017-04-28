@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Homework #2</title>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <!--
+  <link rel="stylesheet" href="./main.css">
+  -->
+  <style>
+    div#rand {
+      font-size: 36px;
+      padding: 15px;
+      width: 800px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      background: #737373; 
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="head">HOMEWORK 2 (Originally, adapted from Classmate Emma's file)</div>
+  <div class="container">
+    <hr><hr>
+	<p></p>
+    <div id="rand">慈濟靜思語
+	</div>
+    <input type="button" onclick="launch()" value="啟動">
+    <p></p>
+    <hr><hr>
+    <p></p>
+    <svg id="note" width="300" height="200"></svg>
+    <p></p>
+    <hr><hr>
+    <p></p>
+    <svg id="bar" width="350" height="240"></svg>
+    <p></p>
+	<p></p>
+    <hr><hr>
+    <p></p>
+    <svg id="line" width="350" height="280"></svg>
+	<hr><hr>
+  </div>
+  <div class="footer">
+    <a href="http://www.jweb.ml">&lt;&lt; Return to Home Page</a>
+  </div>
+
+  <script>
+    var words = [
+        "\"善於利用時間的人，無時無刻不是修持參禪的好機緣。\"",
+        "\"心平靜，當下就是淨土。\"",
+        "\"真正的心好，應該是非常自然、沒有一絲一毫地考慮，馬上伸出援手去扶助別人。\"",
+        "\"忘功不忘過，忘怨不忘恩。\"",
+        "\"轉一個角度來看世界，世界無限寬大；換一種立場待人處事，人事無不輕安。\"",
+        "\"布施若不是真正心存喜捨，則非但沒有功德，反增煩惱。\"",
+        "\"起心動念無不是業，開口動舌、舉手投足無不是罪。\"",
+        "\"不要小看自己，因為人有無限的可能。\"",
+        "\"人人本具菩薩心，也具有和菩薩同等的精神與力量。\"",
+        "\"一個人面臨絕境時，還能心存感恩很是難得。永保感恩心付出的人，比較不會陷入絕境。\"",
+        "\"「戒」是不起心動念；「定」是臨危不亂；「慧」能運心轉境。\"",
+        "\"一個人的快樂，不是因為他擁有得多，而是因為他計較得少。\""
+    ];
+    function random(n,m){
+        return Math.ceil(Math.random()*(m-n)+n);
+    }
+      
+    function launch(){
+      d3.select('#rand').text(words[random(0, 11)]);
+    }
+
+    // Music Note
+    var region1 = d3.select('svg#note');
+    region1.append("rect").attr({ x: 0, y: 0, width: 350, height: 225, fill: "steelblue" });
+	
+	
+    for(var i=0; i<5; i++){
+      region1.append("line").attr({ x1: 0, y1: 45+30*i, x2: 350, y2: 45+30*i, stroke: "black" });
+    }
+	for(var i=0; i<3; i++){
+		region1.append("circle").attr({ cx: 150+i*40, cy: 120-i*15, r: 15 });
+		region1.append("rect").attr({ x: 160+i*40, y: 45-i*15, width: 5, height: 78 });
+		region1.append("text").attr({ x: 140+i*40, y: 195, "font-size": 40 }).text(String.fromCharCode(65+i));
+	}
+
+    // horizontal bar chart
+    region2 = d3.select('svg#bar');
+    for(var i=0; i<10; i++){
+      var curNum = random(20, 200);
+      region2.append("rect").attr({ x: 0, y: 24*i, width: curNum, height: 20, fill: "green" });
+      region2.append("text").attr({ x: curNum+10, y: 11+24*i, "font-size": 14 }).text(curNum);
+    }
+
+    // line chart
+    region3 = d3.select('svg#line');
+    var points = "0,0"
+    for(var i=0; i<10; i++){
+      var curNum = random(20, 200);
+      points += " " + curNum + "," + 24*(i+1);
+      region3.append("circle").attr({ cx: curNum, cy: 24*(i+1), r: 4, fill: "red" });
+      region3.append("text").attr({ x: curNum+10, y: 5+24*(i+1), "font-size": 14 }).text(curNum);
+    }
+    points += " 0,265";
+    region3.append("polyline").attr({ points: points, stroke:"blue", fill: "none" });
+  </script>
+</body>
+</html>
